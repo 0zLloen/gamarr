@@ -38,7 +38,9 @@ RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build \
 
 FROM alpine:3.21
 
-RUN apk add --no-cache ca-certificates tzdata p7zip && \
+# clamav-clamdscan: internal/safety/scanner.go shells out to clamdscan; without
+# it every scan logs "clamdscan not installed" and is skipped.
+RUN apk add --no-cache ca-certificates tzdata p7zip clamav-clamdscan && \
     adduser -D -u 1000 gamarr
 
 COPY --from=builder /gamarr /usr/local/bin/gamarr
