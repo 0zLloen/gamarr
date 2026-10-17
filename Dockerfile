@@ -10,7 +10,7 @@ COPY frontend/ ./
 COPY web/index.html ../web/index.html
 RUN npm run build
 
-FROM --platform=$BUILDPLATFORM golang:1.25-alpine AS builder
+FROM --platform=$BUILDPLATFORM golang:1.26-alpine AS builder
 
 # Empty by default, and the -X below is applied only when it is set, so an
 # unset VERSION falls through to the default compiled into main.go. A literal
